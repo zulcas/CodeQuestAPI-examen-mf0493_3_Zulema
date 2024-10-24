@@ -75,6 +75,28 @@ const quizData = [
     },
   ];
 
+  const question = {
+    "question": "What does CSS stand for?",
+    "answerOptions": [
+      {
+        "answer": "Cascading Style Sheets",
+        "isCorrect": true
+      },
+      {
+        "answer": "Computer Style System",
+        "isCorrect": false
+      },
+      {
+        "answer": "Creative Styling Solution",
+        "isCorrect": false
+      },
+      {
+        "answer": "Coded Style Syntax",
+        "isCorrect": false
+      }
+    ]
+  }
+
 // Función para obtener el índice del día, basado en la fecha actual
 function getDayIndex(totalQuestions) {
     const today = new Date();
@@ -88,10 +110,9 @@ app.get('/daily-question', (req, res) => {
       const dayIndex = getDayIndex(totalQuestions);
     
       // Obtener la pregunta correspondiente al día
-      const questionOfTheDay = quizData[dayIndex];
     
       // Renderizar la página con la pregunta y las opciones
-      res.render('home', { question: questionOfTheDay });
+      res.render('home', { question });
     })
 
 

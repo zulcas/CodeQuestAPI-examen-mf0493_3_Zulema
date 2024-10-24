@@ -18,17 +18,29 @@
 
     <!-- Mostrar las opciones de respuesta -->
     <div class="flex flex-col space-y-4">
-      <% question.options.forEach(option => { %>
-        <button class="bg-gray-200 text-gray-800 p-2 rounded"><%= option %></button>
+      <% question.answerOptions.forEach(option => { %>
+        <button class="bg-gray-200 text-gray-800 p-2 rounded"><%= option.answer %></button>
       <% }); %>
     </div>
   </div>
+
   <script>
-    const correctAnswer = '<%= question.answer %>';
+    
+    const answerA = '<%= question.answerOptions[0].answer %>';
+    const answerAIsCorrect = '<%= question.answerOptions[0].isCorrect %>';
+    const answerB = '<%= question.answerOptions[1].answer %>';
+    const answerBIsCorrect = '<%= question.answerOptions[1].isCorrect %>';
+    const answerC = '<%= question.answerOptions[2].answer %>';
+    const answerCIsCorrect = '<%= question.answerOptions[2].isCorrect %>';
+    const answerD = '<%= question.answerOptions[3].answer %>';
+    const answerDIsCorrect = '<%= question.answerOptions[3].isCorrect %>';
+
+
   
   document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', function() {
-      if (this.textContent === correctAnswer) {
+      console.log('answerA: ', answerAIsCorrect)
+      if (this.textContent === answerA) {
         alert('¡Correct!');
       } else {
         alert('Incorrect. The right answer is: ' + correctAnswer);
