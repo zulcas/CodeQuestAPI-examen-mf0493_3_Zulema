@@ -19,17 +19,23 @@ const app = express();
         answerOptions
     })
 
-    res.status(201).json({
-        "message": "Question created successfully", 
-        "createdQuestion": createdQuestion
-    });
+  
 }*/
-//------------------------Ejemplo de Óscar
+
 app.get('/api/v1/question/random', async (req, res) => {
 
     const questions = await Questions.find()
-    console.log(questions);
-    res.json({questions});
+
+    const totalQuestions = await Questions.countDocuments();
+    const randomIndex = Math.floor(Math.random() * totalQuestions);
+    const randomQuestion = questions[randomIndex]; 
+    
+
+    res.status(201).json({
+        "message": "Random question delivered successfully", 
+        "Question": randomQuestion
+    });
+    
 })
 
 //-----------------------------DB Connect
