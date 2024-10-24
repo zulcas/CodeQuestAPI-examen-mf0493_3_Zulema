@@ -1,30 +1,25 @@
+const { Schema, model } = require('mongoose');
+
 const questionSchema = new Schema({
-    title: {
+   /* title: {
         type: String,
-        require: true,
+        required: true,
     },
     language: {
         type: String,
-        require: true,
+        required: true,
         enum:[]
-    },
+    },*/
     question: {
         type: String,
-        require: true
+        required: true
     },
     codeExamples: {
         type: [String]
     },
-    // answer: {
-    //     type: [String],
-    //     isCorrect: {
-    //         type: Boolean,
-    //         required: true
-    //     }
-    // },
     answerOptions: [
         {
-          answer: {
+          answers: {
             type: String,
             required: true // Texto de la opción de respuesta 
           },
@@ -35,19 +30,19 @@ const questionSchema = new Schema({
         },
         
       ], 
-      required: true,
-      return: Array.length(-4) //limitar la cantidad de respuestas
+      //required: true,
+      //return: Array.length(-4) //limitar la cantidad de respuestas
     // correctAnswer: {
     //     type: [String],
-    //     require: true
+    //     required: true
     // },
     // incorrectAnswer: {
     //     type: [String],
-    //     require: true
+    //     required: true
     // }
 
 });
 
-const Question = model('question', questionSchema);
+const Questions = model('question', questionSchema);
 
-module.exports = Question
+module.exports = Questions

@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Questions = require('./models/question.model');
 
 dotenv.config();
 
 const app = express();
 
 
-exports.postQuestion = async( req, res )=> {
+/*exports.postQuestion = async( req, res )=> {
     const { title, language, question, codeExamples, answerOptions } = req.body;
 
     const createdQuestion = await Question.create({
@@ -22,18 +23,13 @@ exports.postQuestion = async( req, res )=> {
         "message": "Question created successfully", 
         "createdQuestion": createdQuestion
     });
-}
+}*/
 //------------------------Ejemplo de Óscar
-app.get('/api/v1/question/random', (req, res) => {
-	res.json({
-		"question": "What is the result of `2 + 2` in JavaScript?",
-		"options": [
-			{ "text": "3", "correct": false },
-			{ "text": "4", "correct": true },
-			{ "text": "22", "correct": false },
-			{ "text": "NaN", "correct": false }
-		]
-	})
+app.get('/api/v1/question/random', async (req, res) => {
+
+    const questions = await Questions.find()
+    console.log(questions);
+    res.json({questions});
 })
 
 //-----------------------------DB Connect
@@ -45,6 +41,8 @@ const connectDB = async () => {
         console.error(`Ha ocurrido el siguiente error: ${error.message}`);
     }
 }
+
+
 
 const PORT = process.env.PORT || 3000;
 
