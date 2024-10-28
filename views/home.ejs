@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Karla&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="home.css">
 </head>
 <body class="bg-black flex items-center justify-center h-screen"style="font-family: 'Oxanium', sans-serif">
   <div class="bg-lime-500 p-6 rounded-lg shadow-lg text-center">
@@ -60,9 +61,15 @@
       console.log('rightAnswerDef: ', rightAnswerDef)
 
       if (this.textContent === rightAnswerDef) {
-        alert('¡Correct!');
+        // alert('¡Correct!');
+        button.classList.remove("bg-gray-200")
+        button.classList.add("bg-lime-700");
+        button.classList.add("right");
       } else {
-        alert('Incorrect. The right answer is: ' + rightAnswerDef);
+        button.classList.remove("bg-gray-200")
+        button.classList.add("bg-red-500")
+        button.classList.add("wrong")
+        // alert('Incorrect. The right answer is: ' + rightAnswerDef);
       }
     });
   });
