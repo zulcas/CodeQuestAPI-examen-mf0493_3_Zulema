@@ -36,14 +36,33 @@
     const answerDIsCorrect = '<%= question.answerOptions[3].isCorrect %>';
 
 
+    const rightAnswer = (answer1, answer2, answer3, answer4, answer1bool, answer2bool, answer3bool, answer4bool) => {
+      if (answer1bool == "true") {
+        console.log("answer1: ", answer1)
+        return answer1;
+      } else if (answer2bool == "true") {
+        console.log("answer2: ", answer2)
+        return answer2;
+      } else if (answer3bool == "true") {
+        console.log("answer3: ", answer3)
+        return answer3;
+      } else if (answer4bool == "true") {
+        console.log("answer4: ", answer4)
+        return answer4;
+      }
+    }
+    const rightAnswerDef = rightAnswer(answerA, answerB, answerC, answerD, answerAIsCorrect, answerBIsCorrect, answerCIsCorrect, answerDIsCorrect)
+    console.log('rightAnswer: ', rightAnswerDef)
+
   
   document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', function() {
-      console.log('answerA: ', answerAIsCorrect)
-      if (this.textContent === answerA) {
+      console.log('rightAnswerDef: ', rightAnswerDef)
+
+      if (this.textContent === rightAnswerDef) {
         alert('¡Correct!');
       } else {
-        alert('Incorrect. The right answer is: ' + correctAnswer);
+        alert('Incorrect. The right answer is: ' + rightAnswerDef);
       }
     });
   });
