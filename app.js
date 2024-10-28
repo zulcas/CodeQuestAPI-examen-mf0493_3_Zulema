@@ -1,12 +1,13 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
+const indexRouter = require('./routes/index');
 
 
 dotenv.config();
 
 const app = express();
-
+app.use('/', indexRouter);
 
 /*exports.postQuestion = async( req, res )=> {
 	const { title, language, question, codeExamples, answerOptions } = req.body;
