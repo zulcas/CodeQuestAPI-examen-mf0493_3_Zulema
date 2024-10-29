@@ -3,7 +3,7 @@ const questionService = require('../services/question.services')
 const getRandomQuestions = async (req, res) => {
 	try {
 
-		const randomQuestion = questionService.getRandomQuestion();
+		const randomQuestion = await questionService.getRandomQuestion();
 
 
 		/* 	const totalQuestions = await Questions.countDocuments();
