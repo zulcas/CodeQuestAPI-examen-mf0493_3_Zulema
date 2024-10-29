@@ -2,36 +2,28 @@ const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
 const indexRouter = require('./routes/index');
+const { getRandomQuestion } = require('./services/question.services');
 
 
 dotenv.config();
 
 const app = express();
+app.set('view engine', 'ejs');
+
 app.use('/', indexRouter);
 
-/*exports.postQuestion = async( req, res )=> {
-	const { title, language, question, codeExamples, answerOptions } = req.body;
+app.get('/daily-question', async (req, res) => {
 
-	const createdQuestion = await Question.create({
-		title, 
-		language, 
-		question, 
-		codeExamples, 
-		answerOptions
-	})
+  // Obtener la pregunta correspondiente al día
+  const question = await getRandomQuestion();
 
-  
-}*/
-
-
-
-//-----------------------------DB Connect
-
-
+  // Renderizar la página con la pregunta y las opciones
+  res.render('home', { question });
+})
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-	connectDB();
-	console.log(`Server listening in port ${PORT}`)
+app.listen(PORT, async () => {
+  await connectDB();
+  console.log(`Server listening in port ${PORT}`)
 })

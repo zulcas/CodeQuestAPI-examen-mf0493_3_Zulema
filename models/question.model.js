@@ -11,7 +11,7 @@ const questionSchema = new Schema({
 	},
 	answerOptions: [
 		{
-			answers: {
+			answer: {
 				type: String,
 				required: true // Texto de la opción de respuesta 
 			},
