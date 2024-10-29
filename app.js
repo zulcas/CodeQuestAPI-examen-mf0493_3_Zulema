@@ -1,17 +1,37 @@
 const express = require('express');
+const connectDB = require('./config/db');
+const dotenv = require('dotenv');
+const indexRouter = require('./routes/index');
+
+
+dotenv.config();
 
 const app = express();
+app.use('/', indexRouter);
 
-app.get('/api/v1/question/random', (req, res) => {
-    res.json({
-        "question": "What is the result of `2 + 2` in JavaScript?",
-        "options": [
-            { "text": "3", "correct": false },
-            { "text": "4", "correct": true },
-            { "text": "22", "correct": false },
-            { "text": "NaN", "correct": false }
-        ]
-    })
+/*exports.postQuestion = async( req, res )=> {
+	const { title, language, question, codeExamples, answerOptions } = req.body;
+
+	const createdQuestion = await Question.create({
+		title, 
+		language, 
+		question, 
+		codeExamples, 
+		answerOptions
+	})
+
+  
+}*/
+
+
+
+//-----------------------------DB Connect
+
+
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+	connectDB();
+	console.log(`Server listening in port ${PORT}`)
 })
-
-app.listen(3000);
