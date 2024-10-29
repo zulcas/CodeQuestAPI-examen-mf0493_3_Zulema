@@ -1,20 +1,19 @@
-const Questions = require('../models/question.model');
 
+const questionService = require('../services/question.services')
 const getRandomQuestions = async (req, res) => {
 	try {
 
-		const questions = await Questions.find()
+		const randomQuestion = questionService.getRandomQuestion();
 
-		const totalQuestions = await Questions.countDocuments();
-		if (totalQuestions === 0) {
-			return res.status(404).json({
-				message: "Question not found",
-				results: []
-			})
-		}
 
-		const randomIndex = Math.floor(Math.random() * totalQuestions);
-		const randomQuestion = questions[randomIndex];
+		/* 	const totalQuestions = await Questions.countDocuments();
+			if (totalQuestions === 0) {
+				return res.status(404).json({
+					message: "Question not found",
+					results: []
+				})
+			} */
+
 
 		res.status(200).json({
 			message: "Random question delivered successfully",
