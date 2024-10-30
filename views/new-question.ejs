@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pregunta del Día</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Karla&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body class="bg-black flex items-center justify-center h-screen"style="font-family: 'Oxanium', sans-serif">
+  <form class="bg-customGreen p-6 rounded-lg shadow-lg text-center" action="/submit-new-question" method="POST">
+    <h1 class="text-2xl font-bold mb-4" style="font-family: 'Press Start 2P', sans-serif">SUBMIT NEW PROGRAMMING QUESTION</h1>
+
+    <div class="flex flex-col space-y-4">
+        
+        <!-- Mostrar la pregunta -->
+        <label for="question" class="text-left">Write your question here:</label>       
+        <textarea name="question" id="question" class="bg-gray-200 text-gray-800 p-2 rounded"></textarea>
+
+        <!-- Mostrar las opciones de respuesta -->
+        <label for="answer" class="text-left">Write your answers:</label>
+        <input type="text" name="answer" id="answer" class="bg-gray-200 text-gray-800 p-2 rounded">
+        <input type="text" name="answer" id="answer" class="bg-gray-200 text-gray-800 p-2 rounded">
+        <input type="text" name="answer" id="answer" class="bg-gray-200 text-gray-800 p-2 rounded">
+        <input type="text" name="answer" id="answer" class="bg-gray-200 text-gray-800 p-2 rounded">
+
+        <input type="submit" value="Send" class="bg-gray-200 text-gray-800 p-2 rounded">
+    </div>
+  </form>
+</body>
+<script>
+    tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          customGreen: '#41fd5b',
+          darkGreen: '#35cb49'
+        },
+      },
+    },
+  };
+</script>
+</html>

@@ -30,7 +30,25 @@ const getRandomQuestions = async (req, res) => {
 
 }
 
-module.exports = { getRandomQuestions };
+const newQuestionForm = (req, res) => {
+	res.render('new-question');
+};
+
+const createNewQuestion = (req, res) => {
+	try {	
+		console.log("hola", req.body);
+		res.send('Se han enviado correctamente los datos');
+	} catch {
+		res.send('Ha ocurrido un error.');
+	}
+	
+};
+
+module.exports = { 
+	getRandomQuestions,
+	newQuestionForm,
+	createNewQuestion
+ };
 /* app.get('/api/v1/question/random', async (req, res) => {
 
 
