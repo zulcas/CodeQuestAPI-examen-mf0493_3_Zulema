@@ -23,6 +23,8 @@
         <button class="bg-gray-200 text-gray-800 p-2 rounded"><%= option.answer %></button>
       <% }); %>
     </div>
+    <div id="explanation">
+    </div>
   </div>
 
   <script>
@@ -36,6 +38,7 @@
     const answerD = '<%= question.answerOptions[3].answer %>';
     const answerDIsCorrect = '<%= question.answerOptions[3].isCorrect %>';
 
+    const explanation = '<%= question.explanation %>'
 
     const rightAnswer = (answer1, answer2, answer3, answer4, answer1bool, answer2bool, answer3bool, answer4bool) => {
       if (answer1bool == "true") {
@@ -68,6 +71,10 @@
         button.classList.add("bg-red-500")
         // alert('Incorrect. The right answer is: ' + rightAnswerDef);
       }
+      // Show explanation 
+      const explanationEl = document.getElementById("explanation");
+      explanationEl.textContent = explanation;
+
        // Disable all buttons after any button is clicked
     document.querySelectorAll('button').forEach(btn => btn.disabled = true);
     });

@@ -21,7 +21,10 @@ const questionSchema = new Schema({
 			}
 		},
 	],
-
+	explanation: {
+		type: String,
+		maxlength: 4000,
+	},
 	urlSource: {
 		type: String
 
