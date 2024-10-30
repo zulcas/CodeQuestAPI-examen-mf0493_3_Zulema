@@ -2,8 +2,17 @@
 const questionService = require('../services/question.services')
 const getRandomQuestions = async (req, res) => {
 	try {
+		let { amount } = req.query;
+		amount = parseInt(amount, 10);
 
-		const randomQuestion = await questionService.getRandomQuestion();
+		//validation of amount
+		if (isNaN(amount) || amount < 1) {
+			amount = 10;
+		} else if (amount > 30) {
+			amount = 30;
+		}
+
+		const randomQuestion = await questionService.getRandomQuestion(amount);
 
 
 		/* 	const totalQuestions = await Questions.countDocuments();
@@ -16,13 +25,13 @@ const getRandomQuestions = async (req, res) => {
 
 
 		res.status(200).json({
-			message: "Random question delivered successfully",
+			message: "Random questions delivered successfully",
 			results: randomQuestion
 		});
 
 	} catch (error) {
 		res.status(500).json({
-			message: "Error fetching random question",
+			message: "Error fetching random questions",
 
 
 		})
