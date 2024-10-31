@@ -31,7 +31,9 @@ const getRandomQuestions = async (req, res) => {
 };
 
 const getTemplateQuestions = async (req, res) =>{
-
+	const randomQuestion = await questionService.getRandomQuestion();
+	console.log("🚀 ~ getTemplateQuestions ~ randomQuestion:", randomQuestion)
+	
 }
 
 module.exports = { 
