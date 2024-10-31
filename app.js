@@ -16,7 +16,7 @@ app.get('/daily-question', async (req, res) => {
 
   // Obtener la pregunta correspondiente al día
   const question = await getRandomQuestion();
-console.log("question: ", question)
+
   // Renderizar la página con la pregunta y las opciones
   res.render('home', { question });
 })
