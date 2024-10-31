@@ -26,11 +26,11 @@ const testObject = [{
     "urlFont": "https://raw.githubusercontent.com/Ebazhanov/linkedin-skill-assessments-quizzes/refs/heads/main/angular/angular-quiz.md"
   }];
 
-const filePath = './text.xlsx'
+const filePath = "./resources/kahoot-template.xlsx"
 const workbook = xlsx.readFile(filePath);
 const worksheet = workbook.Sheets["Sheet1"];
 // console.log("🚀 ~ worksheet:", typeof(worksheet))
-worksheet["A4"] = { v: "Hola", t: "s" };
+worksheet["B10"] = { v: testObject[0].urlFont, t: "s" };
 
 xlsx.writeFile(workbook, filePath)
 
