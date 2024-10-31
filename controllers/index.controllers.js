@@ -14,16 +14,6 @@ const getRandomQuestions = async (req, res) => {
 
 		const randomQuestion = await questionService.getRandomQuestion(amount);
 
-
-		/* 	const totalQuestions = await Questions.countDocuments();
-			if (totalQuestions === 0) {
-				return res.status(404).json({
-					message: "Question not found",
-					results: []
-				})
-			} */
-
-
 		res.status(200).json({
 			message: "Random questions delivered successfully",
 			results: randomQuestion
@@ -40,8 +30,3 @@ const getRandomQuestions = async (req, res) => {
 }
 
 module.exports = { getRandomQuestions };
-/* app.get('/api/v1/question/random', async (req, res) => {
-
-
-
-}) */
