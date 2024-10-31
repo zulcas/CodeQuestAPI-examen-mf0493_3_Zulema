@@ -14,16 +14,16 @@ app.use('/', indexRouter);
 
 app.get('/daily-question', async (req, res) => {
 
-  // Obtener la pregunta correspondiente al día
-  const question = await getRandomQuestion();
+	// Obtener la pregunta correspondiente al día
+	const question = await getRandomQuestion();
 
-  // Renderizar la página con la pregunta y las opciones
-  res.render('home', { question });
+	// Renderizar la página con la pregunta y las opciones
+	res.render('home', { question });
 })
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
-  await connectDB();
-  console.log(`Server listening in port ${PORT}`)
+	await connectDB();
+	console.log(`Server listening in port ${PORT}`)
 })
