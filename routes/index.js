@@ -5,6 +5,7 @@ const indexControllers = require('../controllers/index.controllers');
 
 router.get('/api/v1/question/random', indexControllers.getRandomQuestions);
 
+router.get('/export-kahoot-questions', indexControllers.getTemplateQuestions)
 
 
 

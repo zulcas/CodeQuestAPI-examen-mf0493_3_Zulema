@@ -28,9 +28,16 @@ const getRandomQuestions = async (req, res) => {
 		})
 	}
 
+};
+
+const getTemplateQuestions = async (req, res) =>{
+
 }
 
-module.exports = { getRandomQuestions };
+module.exports = { 
+	getRandomQuestions,
+	getTemplateQuestions
+ };
 /* app.get('/api/v1/question/random', async (req, res) => {
 
 
