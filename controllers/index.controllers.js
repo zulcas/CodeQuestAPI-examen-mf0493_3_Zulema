@@ -55,7 +55,7 @@ const getTemplateQuestions = async (req, res) => {
   newWorkbook.Sheets["Sheet1"]["G9"] = { v: 30, t: "n" };
   newWorkbook.Sheets["Sheet1"]["H9"] = { v: correctAnswerNumber, t: "s" };
 
-  const newFilePath = './temporary_excel.xlsx' 
+  const newFilePath = './resources/temporary_excel.xlsx' 
   xlsx.writeFile(newWorkbook, newFilePath);
 
   console.log(`Archivo Excel guardado correctamente en ${newFilePath}`);
