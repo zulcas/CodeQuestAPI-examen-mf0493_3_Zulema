@@ -11,16 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body class="bg-black flex items-center justify-center h-screen"style="font-family: 'Oxanium', sans-serif">
-  <div class="bg-customGreen p-6 rounded-lg shadow-lg text-center">
-    <h1 class="text-2xl font-bold mb-4" style="font-family: 'Press Start 2P', sans-serif">DAILY PROGRAMMING QUESTION</h1>
+  <div class="border-4 border-primaryGreen bg-backgroundGreen p-6 rounded-lg shadow-lg text-center">
+    <h1 class="text-2xl font-bold mb-4 text-white" style="font-family: 'Press Start 2P', sans-serif">DAILY PROGRAMMING QUESTION</h1>
 
     <!-- Mostrar la pregunta -->
-    <p class="text-xl text-gray-700 mb-4 italic text-white"><strong><%= question.question %></strong></p>
+    <p class="text-xl mb-4 italic text-primaryGreen"><strong><%= question.question %></strong></p>
 
     <!-- Mostrar las opciones de respuesta -->
     <div class="flex flex-col space-y-4 ">
       <% question.answerOptions.forEach(option => { %>
-        <button class="bg-gray-200 text-gray-800 p-2 rounded"><%= option.answer %></button>
+        <button class="bg-secondaryGreen text-primaryGreen border-2 border-primaryGreen p-2 rounded"><%= option.answer %></button>
       <% }); %>
     </div>
     <div class="mt-4 text-start">
@@ -66,11 +66,15 @@
       console.log('rightAnswerDef: ', rightAnswerDef)
       if (this.textContent === rightAnswerDef) {
         // alert('¡Correct!');
-        button.classList.remove("bg-gray-200")
-        button.classList.add("bg-darkGreen");
+        // button.classList.remove("bg-secondaryGreen text-primaryGreen")
+        button.classList.add("bg-primaryGreen"); 
+        button.classList.add("border-secondaryGreen"); 
+        button.classList.add("text-secondaryGreen");
       } else {
-        button.classList.remove("bg-gray-200")
-        button.classList.add("bg-red-500")
+        // button.classList.remove("bg-gray-200")
+        button.classList.add("bg-errorRed"); 
+        button.classList.add("border-secondaryErrorRed");  
+        button.classList.add("text-white"); 
         // alert('Incorrect. The right answer is: ' + rightAnswerDef);
       }
       // Show explanation 
@@ -78,8 +82,6 @@
       const explanationEl = document.getElementById("explanation");
       explanationtitle.textContent="Explanation:";
       explanationEl.textContent = explanation;
-
-  
 
        // Disable all buttons after any button is clicked
     document.querySelectorAll('button').forEach(btn => btn.disabled = true);
@@ -90,8 +92,12 @@
     theme: {
       extend: {
         colors: {
-          customGreen: '#41fd5b',
-          darkGreen: '#35cb49'
+          primaryGreen: '#41fd5b',
+          secondaryGreen: '#007410',
+          darkGreen: '#35cb49',
+          backgroundGreen: '#003407',
+          errorRed: '#FF7070',
+          secondaryErrorRed: '#DF6666'
         },
       },
     },
