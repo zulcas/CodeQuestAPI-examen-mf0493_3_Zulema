@@ -1,6 +1,6 @@
 const questionService = require('../services/question.services')
-const { getQuestionsFromAI } = require("../services/question.services")
-const Questions = require("../models/question.model");
+const { generateQuestions } = require('../services/question.services');
+
 
 
 const getRandomQuestions = async (req, res) => {
@@ -35,28 +35,10 @@ const getRandomQuestions = async (req, res) => {
 // Logic to get the generated question from the AI
 const getAiQuestions = async (req, res) => {
 	const topic = req.query.topic || "Frontend and Backend programming";
-	if (topic.length < 2 || topic.length > 140) {
-	  return res
-		.status(400)
-		.json({
-		  error:
-			"Topic must be at least 2 characters and not exceed 140 characters.",
-		});
-	}
-  
 	const amount = Math.min(Math.max(parseInt(req.query.amount) || 1, 1), 10);
-	const questions = [];
   
 	try {
-	  for (let i = 0; i < amount; i++) {
-		const quizData = await getQuestionsFromAI(topic);
-		questions.push({
-		  ...quizData,
-		  status: "pending",
-		});
-	  }
-  
-	  await Questions.insertMany(questions);
+	  const questions = await generateQuestions(topic, amount);
   
 	  return res.status(200).json({
 		message: "Random question delivered successfully",
@@ -69,6 +51,9 @@ const getAiQuestions = async (req, res) => {
 		  ? error.response.data
 		  : error.message
 	  );
+	  return res.status(400).json({
+		error: error.message || "An error occurred while generating the question.",
+	  });
 	}
   };
 

@@ -2,7 +2,6 @@ const Questions = require('../models/question.model');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { createPrompt } = require("../utils/aiPrompt")
 
-
 const getRandomQuestion = async () => {
 
 	const questions = await Questions.find();
@@ -29,8 +28,28 @@ const getQuestionsFromAI = async (topic) => {
     }
 }
 
+const generateQuestions = async (topic, amount = 1) => {
+    if (topic.length < 2 || topic.length > 140) {
+      throw new Error("Topic must be at least 2 characters and not exceed 140 characters.");
+    }
+  
+    const questions = [];
+  
+    for (let i = 0; i < amount; i++) {
+      const quizData = await getQuestionsFromAI(topic);
+      questions.push({
+        ...quizData,
+        status: "pending",
+      });
+    }
+  
+    await Questions.insertMany(questions);
+    return questions;
+  };
+  
+
 module.exports = {
 	getRandomQuestion,
-    // issue 15
-	getQuestionsFromAI
+	getQuestionsFromAI,
+    generateQuestions
 }
