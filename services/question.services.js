@@ -43,7 +43,7 @@ const getQuestionsFromAI = async (topic) => {
 }
 
 // Function to generate a specified number of questions based on a given topic
-const generateQuestions = async (topic, amount = 1) => {
+const generateQuestions = async (topic, amount) => {
   // Validate the topic length to ensure it meets the requirements
   if (topic.length < 2 || topic.length > 140) {
       throw new Error("Topic must be at least 2 characters and not exceed 140 characters.");
