@@ -15,10 +15,10 @@ app.use('/', indexRouter);
 app.get('/daily-question', async (req, res) => {
 
   // Obtener la pregunta correspondiente al día
-  const question = await getRandomQuestion();
+  const question = await getRandomQuestion(1);
 
   // Renderizar la página con la pregunta y las opciones
-  res.render('home', { question });
+  res.render('home',  {question} );
 })
 
 const PORT = process.env.PORT || 3000;
