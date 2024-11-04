@@ -1,8 +1,6 @@
 const questionService = require('../services/question.services')
 const { generateQuestions } = require('../services/question.services');
 
-
-
 const getRandomQuestions = async (req, res) => {
 	try {
 		let { amount } = req.query;
@@ -15,21 +13,25 @@ const getRandomQuestions = async (req, res) => {
 			amount = 30;
 		}
 
-		const randomQuestion = await questionService.getRandomQuestion(amount);
+		let randomQuestions = []
+
+		for (let i = 0; i < amount; i++) {
+			const randomQuestion = await questionService.getRandomQuestion();
+			randomQuestions.push(randomQuestion)
+		}
+
+		console.log("random questions", randomQuestions)
 
 		res.status(200).json({
 			message: "Random questions delivered successfully",
-			results: randomQuestion
+			results: randomQuestions
 		});
 
 	} catch (error) {
 		res.status(500).json({
 			message: "Error fetching random questions",
-
-
 		})
 	}
-
 }
 
 // Controller function to handle requests for generating AI-based questions
@@ -47,7 +49,7 @@ const getAiQuestions = async (req, res) => {
   
 	  // Send a successful response with a message and the generated questions
 	  return res.status(200).json({
-		message: "Random question delivered successfully",
+		message: "Random question delivered successfully.",
 		results: questions,
 	  });
 	} catch (error) {
@@ -66,7 +68,6 @@ const getAiQuestions = async (req, res) => {
 	}
   };
 
-  
 module.exports = { 
 	getRandomQuestions,
 	getAiQuestions
