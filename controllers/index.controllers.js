@@ -37,7 +37,7 @@ const newQuestionForm = (req, res) => {
 const createNewQuestion = async (req, res) => {
 	try {	
 		await questionService.insertQuestion(req.body);
-		console.log("hola", req.body);
+		console.log(req.body);
 		res.send('Se han enviado correctamente los datos');
 	} catch {
 		res.send('Ha ocurrido un error.');

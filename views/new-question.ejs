@@ -18,32 +18,33 @@
         
         <!-- Mostrar la pregunta -->
         <label for="question" class="text-left">Write your question here:</label>       
-        <textarea name="question" id="question" class="bg-gray-200 text-gray-800 p-2 rounded" required></textarea>
+        <textarea name="question" id="question" class="bg-gray-200 text-gray-800 p-2 rounded" required maxlength="4000"></textarea>
 
         <!-- Mostrar las opciones de respuesta -->
         <p class="text-left">Write your answers (please, mark the correct ones):</p>
+        
         <div class="flex gap-4 justify-between">
         <label for="answer1" hidden></label>
         <input type="checkbox" name="answer1CheckBox" value="true">
-        <input type="text" name="answer1Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required>
+        <input type="text" name="answer1Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required maxlength="1000">
         </div>
 
         <div class="flex gap-4 justify-between">
         <label for="answer2" hidden></label>
         <input type="checkbox" name="answer2CheckBox" value="true">
-        <input type="text" name="answer2Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required>
+        <input type="text" name="answer2Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required maxlength="1000">
         </div>
 
         <div class="flex gap-4 justify-between">
         <label for="answer3" hidden></label>
         <input type="checkbox" name="answer3CheckBox" value="true">
-        <input type="text" name="answer3Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required>
+        <input type="text" name="answer3Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required maxlength="1000">
         </div>
 
         <div class="flex gap-4 justify-between">
         <label for="answer4" hidden></label>
         <input type="checkbox" name="answer4CheckBox" value="true">
-        <input type="text" name="answer4Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required>
+        <input type="text" name="answer4Text" class="bg-gray-200 text-gray-800 p-2 rounded w-full" required maxlength="1000">
         </div>
 
     </div>
