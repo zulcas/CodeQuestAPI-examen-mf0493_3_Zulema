@@ -21,12 +21,17 @@ const questionSchema = new Schema({
 			}
 		},
 	],
-
+	explanation: {
+		type: String,
+	},
+	status: {
+		type: String,
+		enum: ["approved", "pending"],
+		default: "approved"
+	},
 	urlSource: {
 		type: String
-
 	}
-
 });
 
 const Questions = model('question', questionSchema);
