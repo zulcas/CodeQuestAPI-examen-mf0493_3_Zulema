@@ -5,11 +5,11 @@ const getRandomQuestions = async (req, res) => {
     amount = parseInt(amount, 10);
 
     //validation of amount
-    /* if (isNaN(amount) || amount < 1) {
-			amount = 10;
-		} else if (amount > 30) {
-			amount = 30;
-		} */
+    if (isNaN(amount) || amount < 1) {
+      amount = 10;
+    } else if (amount > 30) {
+      amount = 30;
+    }
 
     const randomQuestion = await questionService.getRandomQuestion(amount);
 
