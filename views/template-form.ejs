@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="\style.css">
     <title>Document</title>
 </head>
 <body>
-    <h1>HOLA</h1>
     <form action="/export-kahoot-questions" method="GET">
         <label for="numberQuestions">Select the number of questions</label>
-        <input type="number" id="numberQuestions" name="numberQuestions" max=20 required>
-        <input type="submit" value="Get Template">
+        <input type="number" id="numberQuestions" name="numberQuestions" max=20 required placeholder="Max 20">
+        <input class="input-btn" type="submit" value="Get Template">
     </form>
 </body>
 </html>
