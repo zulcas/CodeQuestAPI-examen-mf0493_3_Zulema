@@ -15,15 +15,28 @@ app.use('/', indexRouter);
 app.get('/daily-question', async (req, res) => {
 
   // Obtener la pregunta correspondiente al día
-  const question = await getRandomQuestion(1);
-
+  const questions = await getRandomQuestion(20);
+  const questionsWithShuffledAnswers = questions.map(question => {
+    return {
+        ...question,
+        answerOptions: MezclarArray(question.answerOptions)
+    };
+});
   // Renderizar la página con la pregunta y las opciones
-  res.render('home',  {question} );
+  res.render('home',  {questionsWithShuffledAnswers} );
 })
 
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, async () => {
   await connectDB();
   console.log(`Server listening in port ${PORT}`)
 })
+
+//funcion para mezclar las respuestas
+const MezclarArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};

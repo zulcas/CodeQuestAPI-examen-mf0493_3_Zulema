@@ -15,11 +15,11 @@
     <h1 class="text-2xl font-bold mb-4 text-white" style="font-family: 'Press Start 2P', sans-serif">DAILY PROGRAMMING QUESTION</h1>
 
     <!-- Mostrar la pregunta -->
-    <p class="text-xl mb-4 italic text-primaryGreen"><strong><%= question[0].question %></strong></p>
+    <p class="text-xl mb-4 italic text-primaryGreen"><strong><%= questionsWithShuffledAnswers[0].question %></strong></p>
 
     <!-- Mostrar las opciones de respuesta -->
     <div class="flex flex-col space-y-4 ">
-      <% question[0].answerOptions.forEach(option => { %>
+      <% questionsWithShuffledAnswers[0].answerOptions.forEach(option => { %>
         <button class="bg-secondaryGreen text-primaryGreen border-2 border-primaryGreen p-2 rounded"><%= option.answer %></button>
       <% }); %>
     </div>
@@ -31,16 +31,16 @@
 
   <script>
     
-    const answerA = '<%= question[0].answerOptions[0].answer %>';
-    const answerAIsCorrect = '<%= question[0].answerOptions[0].isCorrect %>';
-    const answerB = '<%= question[0].answerOptions[1].answer %>';
-    const answerBIsCorrect = '<%= question[0].answerOptions[1].isCorrect %>';
-    const answerC = '<%= question[0].answerOptions[2].answer %>';
-    const answerCIsCorrect = '<%= question[0].answerOptions[2].isCorrect %>';
-    const answerD = '<%= question[0].answerOptions[3].answer %>';
-    const answerDIsCorrect = '<%= question[0].answerOptions[3].isCorrect %>';
+    const answerA = '<%= questionsWithShuffledAnswers[0].answerOptions[0].answer %>';
+    const answerAIsCorrect = '<%= questionsWithShuffledAnswers[0].answerOptions[0].isCorrect %>';
+    const answerB = '<%= questionsWithShuffledAnswers[0].answerOptions[1].answer %>';
+    const answerBIsCorrect = '<%= questionsWithShuffledAnswers[0].answerOptions[1].isCorrect %>';
+    const answerC = '<%= questionsWithShuffledAnswers[0].answerOptions[2].answer %>';
+    const answerCIsCorrect = '<%= questionsWithShuffledAnswers[0].answerOptions[2].isCorrect %>';
+    const answerD = '<%= questionsWithShuffledAnswers[0].answerOptions[3].answer %>';
+    const answerDIsCorrect = '<%= questionsWithShuffledAnswers[0].answerOptions[3].isCorrect %>';
 
-    const explanation = '<%= question.explanation %>'
+    const explanation = '<%= questionsWithShuffledAnswers[0].explanation %>'
 
     const rightAnswer = (answer1, answer2, answer3, answer4, answer1bool, answer2bool, answer3bool, answer4bool) => {
       if (answer1bool == "true") {
