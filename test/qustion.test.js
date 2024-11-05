@@ -62,9 +62,3 @@ describe('Testing getRandomQuestion service', () => {
 	  });
 })
 
-
-
-describe(),
-  () => {
-    it("should return an array of questions when amount is 1", async () => {});
-  };
