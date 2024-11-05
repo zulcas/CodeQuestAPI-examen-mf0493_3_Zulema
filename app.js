@@ -1,5 +1,5 @@
 const express = require("express");
-const connectDB = require("./config/db");
+const { connectDB } = require("./config/db");
 const dotenv = require("dotenv");
 const indexRouter = require("./routes/index");
 const { getRandomQuestion } = require("./services/question.services");

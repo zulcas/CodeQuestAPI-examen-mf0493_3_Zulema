@@ -1,3 +1,7 @@
+const { connectDB, disconnectDB }  = require("../config/db");
+const { getRandomQuestion } = require("../services/question.services");
+const dotenv = require("dotenv");
+dotenv.config();
 
 describe('Testing about "/api/v1/question/random" endpoint', () => {
 	it('Should connect to the API endpoint for a random question and return a 200 status', async () => {
@@ -32,6 +36,30 @@ describe('Testing about "/api/v1/question/random" endpoint', () => {
 		expect(data.results[0]).toMatchObject(mockQuestionModel);
 		
 	})
+})
+
+describe('Testing getRandomQuestion service', () => {
+	beforeAll(async () => {
+		await connectDB(); // Conecta a la base de datos antes de todos los tests
+	});
+
+	afterAll(async () => {
+		await disconnectDB(); // Desconecta la base de datos después de todos los tests
+	});
+
+	it('Should return 1 when the parameter is 1', async () => {
+		const result = await getRandomQuestion(1);
+		expect(result).toHaveLength(1);
+	});
+
+	it('Should return 1 when the parameter is 20', async () => {
+		const result = await getRandomQuestion(20);
+		expect(result).toHaveLength(20);
+	});
+
+	it('Should return an exception when the parameter is "patata"', async () => {
+		await expect(getRandomQuestion("patata")).rejects.toThrow("Amount must be a positive number.");
+	  });
 })
 
 
