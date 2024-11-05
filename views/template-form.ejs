@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="\style.css">
     <title>Document</title>
 </head>
+
 <body>
     <form action="/export-kahoot-questions" method="GET">
         <label for="numberQuestions">Select the number of questions</label>
         <input type="number" id="numberQuestions" name="numberQuestions" max=20 required placeholder="Max 20">
-        <input class="input-btn" type="submit" value="Get Template">
+        <label for="templateType">Choose Template:</label>
+        <label>
+            <input type="radio" name="templateType" value="excel" required>
+            Excel Template
+        </label>
+        <label>
+            <input type="radio" name="templateType" value="booklet">
+            Booklet Template
+        </label>
+        <!-- <select id="templateType" name="templateType" required>
+            <option value="excel">Excel Template</option>
+            <option value="blooket">Booklet Template</option> -->
+        <input class="input-btn" type="submit" value="Generate Template">
+
+
     </form>
 </body>
+
 </html>
