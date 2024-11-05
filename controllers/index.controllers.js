@@ -38,9 +38,9 @@ const createNewQuestion = async (req, res) => {
 	try {	
 		await questionService.insertQuestion(req.body);
 		console.log(req.body);
-		res.send('Se han enviado correctamente los datos');
+		res.status(201).json({ message: 'Pregunta guardada exitosamente.' });
 	} catch {
-		res.send('Ha ocurrido un error.');
+		res.status(400).json({ error: 'Ha ocurrido un error al guardar la pregunta.' });
 	}
 	
 };

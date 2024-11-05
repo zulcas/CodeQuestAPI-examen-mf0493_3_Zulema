@@ -32,7 +32,7 @@ const insertQuestion = async (q) => {
 		status: "pending"
 	}) } 
 	catch {
-		res.send('No se pudo introducir el elemento en la base de datos.')
+		res.status(400).json({error: 'No se pudo introducir el elemento en la base de datos.'})
 	}
 }; 
 
