@@ -28,7 +28,6 @@ const getRandomQuestions = async (req, res) => {
 
 const getFormTemplate = async (req, res) => {
   res.render('template-form', {
-
   })
 }
 

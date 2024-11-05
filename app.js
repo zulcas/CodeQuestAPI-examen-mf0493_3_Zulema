@@ -13,6 +13,7 @@ app.set('view engine', 'ejs');
 
 app.use('/', indexRouter);
 
+app.use(express.static('public'));
 
 app.get('/daily-question', async (req, res) => {
 
