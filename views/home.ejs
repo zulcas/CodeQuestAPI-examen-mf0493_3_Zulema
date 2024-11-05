@@ -23,8 +23,8 @@
         <button class="bg-secondaryGreen text-primaryGreen border-2 border-primaryGreen p-2 rounded"><%= option.answer %></button>
       <% }); %>
     </div>
-    <div class="mt-4 text-start">
-      <p id="explanationtitle" class="inline bg-gray-200 mt-4 rounded"></p>
+    <div class="mt-4 text-start bg-gray-200 rounded-sm px-1">
+      <p id="explanationtitle" class="inline mt-4 rounded"></p>
       <p id="explanation"></p>
     </div>
   </div>
@@ -64,6 +64,7 @@
   document.querySelectorAll('button').forEach(button => {
     button.addEventListener('click', function() {
       console.log('rightAnswerDef: ', rightAnswerDef)
+      console.log('this.textContent', this.textContent)
       if (this.textContent === rightAnswerDef) {
         // alert('¡Correct!');
         // button.classList.remove("bg-secondaryGreen text-primaryGreen")
@@ -78,10 +79,12 @@
         // alert('Incorrect. The right answer is: ' + rightAnswerDef);
       }
       // Show explanation 
+       if (explanation) {
       const explanationtitle = document.getElementById('explanationtitle');
       const explanationEl = document.getElementById("explanation");
       explanationtitle.textContent="Explanation:";
       explanationEl.textContent = explanation;
+    }
 
        // Disable all buttons after any button is clicked
     document.querySelectorAll('button').forEach(btn => btn.disabled = true);
