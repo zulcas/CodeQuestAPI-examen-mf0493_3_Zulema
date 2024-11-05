@@ -1,7 +1,7 @@
 
  
   .modal {
-    display: none; /* Oculto por defecto */
+    display: block;
     position: fixed;
     z-index: 1; /* Mantiene el cuadro encima de otros elementos */
     left: 0;

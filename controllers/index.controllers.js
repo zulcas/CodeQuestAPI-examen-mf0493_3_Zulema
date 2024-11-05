@@ -31,16 +31,19 @@ const getRandomQuestions = async (req, res) => {
 }
 
 const newQuestionForm = (req, res) => {
-	res.render('new-question');
+	let message = '';
+	res.render('new-question', {message});
 };
 
 const createNewQuestion = async (req, res) => {
 	try {	
 		await questionService.insertQuestion(req.body);
 		console.log(req.body);
-		res.status(201).json({ message: 'Pregunta guardada exitosamente.' });
+		let message = 'Thank you for submitting a new question. Our team will revise it and, if correct, include it in our database.';
+		res.status(201).render('new-question.ejs', {message});
+		// res.redirect('/submit-new-question');
 	} catch {
-		res.status(400).json({ error: 'Ha ocurrido un error al guardar la pregunta.' });
+		res.status(400).json({ error: 'An error has ocurred while saving the question.' });
 	}
 	
 };
