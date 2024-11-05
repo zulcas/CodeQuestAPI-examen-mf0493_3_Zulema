@@ -5,11 +5,24 @@ body {
     margin: 0;
   }
   
-  a {
+  a{
     text-decoration: none;
     color: #41fd5b;
   }
   
+  h1, h2{
+    color: #41fd5b;
+    text-align: center;
+  }
+
+  p {
+    color: #41fd5b;
+    text-align: center;
+    border: solid 2px #41fd5b;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    margin: 0 20% 0 20%;
+  }
+
   header {
     display: flex;
     flex-direction: row;
@@ -31,7 +44,11 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 20px;
+  }
+  .form-step{
+    font-size: 1.5rem;
+    font-weight: 400;
   }
   form label{
     color: #41fd5b;
@@ -50,7 +67,10 @@ body {
   }
   #numberQuestions{
     width: 100px;
-    color: red;
+    color: black;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1rem;
   }
 
   .logo {

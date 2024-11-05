@@ -56,10 +56,6 @@ const templateType = req.query.templateType;
   const randomQuestion = await questionService.getRandomQuestion();
   // console.log("🚀 ~ getTemplateQuestions ~ randomQuestion:", randomQuestion);
 
-  
-
- 
-
   const correctIndex = randomQuestion.answerOptions.findIndex(
     (option) => option.isCorrect
   );

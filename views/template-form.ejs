@@ -9,22 +9,22 @@
 </head>
 
 <body>
-    <form action="/export-kahoot-questions" method="GET">
-        <label for="numberQuestions">Select the number of questions</label>
-        <input type="number" id="numberQuestions" name="numberQuestions" max=20 required placeholder="Max 20">
-        <label for="templateType">Choose Template:</label>
+    <h1>Export Your Questions for Kahoot or Blooket!</h1>
+    <p>Create a quiz ready to upload into the most popular game-learning platforms: Kahoot and Blooket</p>
+    <form action="/export-questions" method="GET">
+        <label class="form-step" for="numberQuestions">Step 1. Select the number of questions</label>
+        <input type="number" id="numberQuestions" name="numberQuestions" max=20 min="1" required placeholder="1">
+        <label class="form-step" for="templateType">Step 2. Choose your favourite platform</label>
         <label>
             <input type="radio" name="templateType" value="excel" required>
-            Excel Template
+            Kahoot Template
         </label>
         <label>
             <input type="radio" name="templateType" value="booklet">
             Booklet Template
         </label>
-        <!-- <select id="templateType" name="templateType" required>
-            <option value="excel">Excel Template</option>
-            <option value="blooket">Booklet Template</option> -->
-        <input class="input-btn" type="submit" value="Generate Template">
+        <label class="form-step">Step 3. Generate your quiz</label>
+        <input class="input-btn" type="submit" value="Download!">
 
 
     </form>
