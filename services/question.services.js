@@ -14,25 +14,19 @@ const getRandomQuestion = async () => {
 const getQuestionsFromAI = async (topic) => {
     // Create the prompt string based on the provided topic
     const prompt = createPrompt(topic);
-
     // Initialize the Google Generative AI model with the provided API key
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-
     // Specify the generative model to use
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
     try {
         // Request content generation from the AI model using the created prompt
         const response = await model.generateContent(prompt);
-
         // Retrieve the generated text from the model's response
         const generatedText = response.response.text();
         console.log("Generated text:", generatedText)
-
         // Find the positions of the first and last JSON brackets in the generated text
         const jsonStart = generatedText.indexOf('{');
         const jsonEnd = generatedText.lastIndexOf('}') + 1;
-
         // Parse and return the valid JSON portion of the generated text
         return JSON.parse(generatedText.slice(jsonStart, jsonEnd));
     } catch (error) {
@@ -49,25 +43,20 @@ const generateQuestions = async (topic, amount) => {
     if (topic.length < 2 || topic.length > 140) {
         throw new Error("Topic must be at least 2 characters and not exceed 140 characters.");
     }
-
     // Initialize an array to hold the generated questions
     const questions = [];
-
     // Loop to generate the specified amount of questions
     for (let i = 0; i < amount; i++) {
         // Call the getQuestionsFromAI function to generate a single question
         const quizData = await getQuestionsFromAI(topic);
-
         // Add the generated question to the questions array with a status of "pending"
         questions.push({
             ...quizData,
             status: "pending",
         });
     }
-
     // Insert the generated questions into the database
     await Questions.insertMany(questions);
-
     // Return the array of generated questions
     return questions;
 };
