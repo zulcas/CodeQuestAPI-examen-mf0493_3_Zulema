@@ -39,20 +39,20 @@ const getAiQuestions = async (req, res) => {
 		const questions = await generateQuestions(topic, amount);
 		// Send a successful response with a message and the generated questions
 		return res.status(200).json({
-			message: "Random question delivered successfully.",
+			message: "Random questions delivered successfully.",
 			results: questions,
 		});
 	} catch (error) {
 		// Log error details to the console for debugging
 		console.error(
-			"Error generating the question:",
+			"Error generating the questions:",
 			error.response
 				? error.response.data
 				: error.message
 		);
 		// Send a 400 error response with a custom error message if generation fails
 		return res.status(400).json({
-			message: error.message || "An error occurred while generating the question.",
+			message: error.message || "An error occurred while generating the questions.",
 		});
 	}
 };
