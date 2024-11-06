@@ -11,32 +11,45 @@ const getRandomQuestion = async () => {
 const insertQuestion = async (q) => {
 	// q -> question to be introduced
 	try {
-	await Questions.create({
-		question: q.question,
-		answerOptions: [{
-			answer: q.answer1Text,
-			isCorrect: q.answer1CheckBox? true : false 
-		},
-		{
-			answer: q.answer2Text,
-			isCorrect: q.answer2CheckBox? true : false 
-		},
-		{
-			answer: q.answer3Text,
-			isCorrect: q.answer3CheckBox? true : false 
-		},
-		{
-			answer: q.answer4Text,
-			isCorrect: q.answer4CheckBox? true : false 
-		}],
-		status: "pending"
-	}) } 
+			await Questions.create({
+				question: q.question,
+				answerOptions: [{
+					answer: q.answer1Text,
+					isCorrect: q.answer1CheckBox? true : false 
+				},
+				{
+					answer: q.answer2Text,
+					isCorrect: q.answer2CheckBox? true : false 
+				},
+				{
+					answer: q.answer3Text,
+					isCorrect: q.answer3CheckBox? true : false 
+				},
+				{
+					answer: q.answer4Text,
+					isCorrect: q.answer4CheckBox? true : false 
+				}],
+				status: "pending"
+			})
+	} 
 	catch {
 		res.status(400).json({error: 'No se pudo introducir el elemento en la base de datos.'})
 	}
 }; 
 
+const validateCheckboxNewQuestion = (obj) =>{
+	//Function receives information from req.body and validate checkbox status 
+	//1) Validate exists at least one correct answer
+	const hasCorrectAnswer = Object.values(obj).some(element => {
+		//If some checkbox (boolean data) is true we validate correctly the answer
+		return (element == "true" && element)	
+	});
+	console.log(hasCorrectAnswer)
+	return hasCorrectAnswer;
+}
+
 module.exports = {
 	getRandomQuestion,
-	insertQuestion
+	insertQuestion, 
+	validateCheckboxNewQuestion
 }
