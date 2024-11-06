@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 
 const questionSchema = new Schema({
-
 	question: {
 		type: String,
 		required: true
@@ -23,13 +22,16 @@ const questionSchema = new Schema({
 	],
 	explanation: {
 		type: String,
-		maxlength: 4000,
+		maxlength: 4000
+	},
+	status: {
+		type: String,
+		enum: ["approved", "pending"],
+		default: "approved"
 	},
 	urlSource: {
 		type: String
-
 	}
-
 });
 
 const Questions = model('question', questionSchema);

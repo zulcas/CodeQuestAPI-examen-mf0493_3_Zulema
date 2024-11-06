@@ -1,105 +1,105 @@
-const questionService = require("../services/question.services");
 const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
+const { generateQuestions, getRandomQuestion } = require('../services/question.services');
 
 const getFormTemplate = async (req, res) => {
-  res.render("template-form", {});
+	res.render("template-form", {});
 };
 
 const getTemplateQuestions = async (req, res) => {
-  const { numberQuestions } = req.query;
+	const { numberQuestions } = req.query;
 
-  const templateType = req.query.templateType;
+	const templateType = req.query.templateType;
 
-  let row = templateType == "excel" ? 9 : 3;
-  console.log("🚀 ~ getTemplateQuestions ~ row:", row);
+	let row = templateType == "excel" ? 9 : 3;
+	console.log("🚀 ~ getTemplateQuestions ~ row:", row);
 
-  //lee el template
-  const originalFilePath =
-    templateType == "excel"
-      ? "./resources/kahoot-template.xlsx"
-      : "./resources/blooket-template.xlsx";
-  const workbook = xlsx.readFile(originalFilePath);
+	//lee el template
+	const originalFilePath =
+		templateType == "excel"
+			? "./resources/kahoot-template.xlsx"
+			: "./resources/blooket-template.xlsx";
+	const workbook = xlsx.readFile(originalFilePath);
 
-  // creamos el nuevo documento
+	// creamos el nuevo documento
 
-  const worksheet = workbook.Sheets["Sheet1"];
-  const newWorkbook = xlsx.utils.book_new();
+	const worksheet = workbook.Sheets["Sheet1"];
+	const newWorkbook = xlsx.utils.book_new();
 
-  // Agregar la copia de la hoja al nuevo archivo
-  xlsx.utils.book_append_sheet(newWorkbook, worksheet, "Sheet1");
+	// Agregar la copia de la hoja al nuevo archivo
+	xlsx.utils.book_append_sheet(newWorkbook, worksheet, "Sheet1");
 
-  const randomQuestions = await questionService.getRandomQuestion(Number(numberQuestions));
-  console.log("🚀 ~ getTemplateQuestions ~ randomQuestions:", randomQuestions.length)
+	const randomQuestions = await getRandomQuestion(Number(numberQuestions));
+	console.log("🚀 ~ getTemplateQuestions ~ randomQuestions:", randomQuestions.length)
 
 
-  for (let i = 0; i < randomQuestions.length; i++) {
+	for (let i = 0; i < randomQuestions.length; i++) {
 
-	const randomQuestion = randomQuestions[i];
+		const randomQuestion = randomQuestions[i];
 
-    const correctIndex = randomQuestion.answerOptions.findIndex(
-      (option) => option.isCorrect
-    );
-    const correctAnswerNumber = correctIndex + 1;
+		const correctIndex = randomQuestion.answerOptions.findIndex(
+			(option) => option.isCorrect
+		);
+		const correctAnswerNumber = correctIndex + 1;
 
-    newWorkbook.Sheets["Sheet1"][`B${row}`] = {
-      v: randomQuestion.question,
-      t: "s",
-    };
-    newWorkbook.Sheets["Sheet1"][`C${row}`] = {
-      v: randomQuestion.answerOptions[0].answer,
-      t: "s",
-    };
-    newWorkbook.Sheets["Sheet1"][`D${row}`] = {
-      v: randomQuestion.answerOptions[1].answer,
-      t: "s",
-    };
-    newWorkbook.Sheets["Sheet1"][`E${row}`] = {
-      v: randomQuestion.answerOptions[2].answer,
-      t: "s",
-    };
-    newWorkbook.Sheets["Sheet1"][`F${row}`] = {
-      v: randomQuestion.answerOptions[3].answer,
-      t: "s",
-    };
-    newWorkbook.Sheets["Sheet1"][`G${row}`] = { v: 30, t: "n" };
-    newWorkbook.Sheets["Sheet1"][`H${row}`] = {
-      v: correctAnswerNumber,
-      t: "s",
-    };
+		newWorkbook.Sheets["Sheet1"][`B${row}`] = {
+			v: randomQuestion.question,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`C${row}`] = {
+			v: randomQuestion.answerOptions[0].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`D${row}`] = {
+			v: randomQuestion.answerOptions[1].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`E${row}`] = {
+			v: randomQuestion.answerOptions[2].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`F${row}`] = {
+			v: randomQuestion.answerOptions[3].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`G${row}`] = { v: 30, t: "n" };
+		newWorkbook.Sheets["Sheet1"][`H${row}`] = {
+			v: correctAnswerNumber,
+			t: "s",
+		};
 
-    row += 1;
-  }
+		row += 1;
+	}
 
-  const newFilePath =
-    templateType == "excel"
-      ? "./resources/temporary_excel.xlsx"
-      : "./resources/temporary_csv.csv";
+	const newFilePath =
+		templateType == "excel"
+			? "./resources/temporary_excel.xlsx"
+			: "./resources/temporary_csv.csv";
 
-  if (templateType == "excel") {
-    xlsx.writeFile(newWorkbook, newFilePath);
+	if (templateType == "excel") {
+		xlsx.writeFile(newWorkbook, newFilePath);
 
-    console.log(`Archivo xlsx guardado correctamente en ${newFilePath}`);
-  } else {
-    xlsx.writeFile(newWorkbook, newFilePath, { bookType: "csv" });
+		console.log(`Archivo xlsx guardado correctamente en ${newFilePath}`);
+	} else {
+		xlsx.writeFile(newWorkbook, newFilePath, { bookType: "csv" });
 
-    console.log(`Archivo CSV guardado correctamente en ${newFilePath}`);
-  }
+		console.log(`Archivo CSV guardado correctamente en ${newFilePath}`);
+	}
 
-  const nameFile =
-    templateType == "excel"
-      ? `${numberQuestions}_questions_for_kahoot.xlsx`
-      : `${numberQuestions}_questions_for_blooket.csv`;
+	const nameFile =
+		templateType == "excel"
+			? `${numberQuestions}_questions_for_kahoot.xlsx`
+			: `${numberQuestions}_questions_for_blooket.csv`;
 
-  res.download(newFilePath, nameFile, (err) => {
-    if (err) {
-      console.error("Error al enviar el archivo:", err);
-      res.status(500).send("Error al descargar el archivo");
-    } else {
-      fs.unlinkSync(newFilePath);
-    }
-  });
+	res.download(newFilePath, nameFile, (err) => {
+		if (err) {
+			console.error("Error al enviar el archivo:", err);
+			res.status(500).send("Error al descargar el archivo");
+		} else {
+			fs.unlinkSync(newFilePath);
+		}
+	});
 };
 
 /**
@@ -121,32 +121,62 @@ const getTemplateQuestions = async (req, res) => {
  * @throws {Error} If an unexpected error occurs, a 500 status code is returned with the error message.
  */
 const getRandomQuestions = async (req, res) => {
-  try {
-    let { amount } = req.query;
-    amount = parseInt(amount, 10);
+	try {
+		let { amount } = req.query;
+		amount = parseInt(amount, 10);
 
-    //validation of amount
-    if (isNaN(amount) || amount < 1) {
-      amount = 10;
-    } else if (amount > 30) {
-      amount = 30;
-    }
+		//validation of amount
+		if (isNaN(amount) || amount < 1) {
+			amount = 10;
+		} else if (amount > 30) {
+			amount = 30;
+		}
 
-    const randomQuestion = await questionService.getRandomQuestion(amount);
+		const randomQuestion = await getRandomQuestion(amount);
 
-    res.status(200).json({
-      message: "Random questions delivered successfully",
-      results: randomQuestion,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: "Error fetching random questions",
-    });
-  }
+		res.status(200).json({
+			message: "Random questions delivered successfully",
+			results: randomQuestion,
+		});
+	} catch (error) {
+		res.status(500).json({
+			message: "Error fetching random questions",
+		});
+	}
+};
+
+// Controller function to handle requests for generating AI-based questions
+const getAiQuestions = async (req, res) => {
+	// Get the topic from the query parameters, or set a default value
+	const topic = req.query.topic || "Frontend and Backend programming";
+	// Parse the "amount" query parameter, setting a default of 1 and ensuring it's between 1 and 10
+	const amount = Math.min(Math.max(parseInt(req.query.amount) || 1, 1), 10);
+	try {
+		// Call the generateQuestions service to create the specified number of questions based on the topic
+		const questions = await generateQuestions(topic, amount);
+		// Send a successful response with a message and the generated questions
+		return res.status(200).json({
+			message: "Random questions delivered successfully.",
+			results: questions,
+		});
+	} catch (error) {
+		// Log error details to the console for debugging
+		console.error(
+			"Error generating the questions:",
+			error.response
+				? error.response.data
+				: error.message
+		);
+		// Send a 400 error response with a custom error message if generation fails
+		return res.status(400).json({
+			message: error.message || "An error occurred while generating the questions.",
+		});
+	}
 };
 
 module.exports = {
-  getRandomQuestions,
-  getTemplateQuestions,
-  getFormTemplate,
+	getRandomQuestions,
+	getTemplateQuestions,
+	getFormTemplate,
+	getAiQuestions
 };
