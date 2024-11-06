@@ -14,6 +14,7 @@ const Questions = require("../models/question.model");
 // getRandomQuestion("patata")
 
 const getRandomQuestion = async (amount) => {
+console.log("🚀 ~ getRandomQuestion ~ amount:", amount)
 
 	if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
 		throw new Error("Amount must be a positive number.");

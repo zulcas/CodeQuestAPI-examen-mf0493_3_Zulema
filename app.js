@@ -7,9 +7,10 @@ const { getRandomQuestion } = require("./services/question.services");
 dotenv.config();
 
 const app = express();
-app.set("view engine", "ejs");
-
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
 app.use("/", indexRouter);
+app.use(express.static('public'));
 
 app.get("/daily-question", async (req, res) => {
   // Get the question corresponding to the day
