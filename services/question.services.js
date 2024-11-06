@@ -1,12 +1,21 @@
-const Questions = require('../models/question.model');
+const Questions = require("../models/question.model");
 
 const getRandomQuestion = async (amount) => {
-		const questions = await Questions.aggregate([ 
-			{ $sample: { size: amount } }   
-		]);		
+	console.log("🚀 ~ getRandomQuestion ~ amount:", amount)
 	
-	return questions;
-};
+		if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
+			throw new Error("Amount must be a positive number.");
+		}
+	
+	  try {
+		const questions = await Questions.aggregate([
+		  { $sample: { size: amount } },
+		]);
+		return questions;
+	  } catch (error) {
+		throw new Error("Error fetching random questions from the database.");
+	  }
+	};
 
 const getRandomQuestionWithoutCodeExamples = async () => {
 	const questions = await Questions.aggregate([
