@@ -23,7 +23,6 @@ const getQuestionsFromAI = async (topic) => {
         const response = await model.generateContent(prompt);
         // Retrieve the generated text from the model's response
         const generatedText = response.response.text();
-        console.log("Generated text:", generatedText)
         // Find the positions of the first and last JSON brackets in the generated text
         const jsonStart = generatedText.indexOf('{');
         const jsonEnd = generatedText.lastIndexOf('}') + 1;
