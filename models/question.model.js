@@ -22,6 +22,7 @@ const questionSchema = new Schema({
 	],
 	explanation: {
 		type: String,
+		maxlength: 4000
 	},
 	status: {
 		type: String,

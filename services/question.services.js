@@ -2,13 +2,6 @@ const Questions = require('../models/question.model');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { createPrompt } = require("../utils/aiPrompt")
 
-const getRandomQuestion = async () => {
-
-    const questions = await Questions.find();
-    const randomIndex = Math.floor(Math.random() * questions.length);
-    const randomQuestion = questions[randomIndex];
-    return randomQuestion;
-}
 
 // Function to generate a multiple-choice question using the AI model
 const getQuestionsFromAI = async (topic) => {
@@ -61,8 +54,35 @@ const generateQuestions = async (topic, amount) => {
 };
 
 
+const getRandomQuestion = async (amount) => {
+    console.log("🚀 ~ getRandomQuestion ~ amount:", amount)
+
+    if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
+        throw new Error("Amount must be a positive number.");
+    }
+
+    try {
+        const questions = await Questions.aggregate([
+            { $sample: { size: amount } },
+        ]);
+        return questions;
+    } catch (error) {
+        throw new Error("Error fetching random questions from the database.");
+    }
+};
+
+const getRandomQuestionWithoutCodeExamples = async () => {
+    const questions = await Questions.aggregate([
+        { $match: { codeExamples: [] } },
+        { $sample: { size: 1 } }
+    ]);
+
+    return questions;
+};
+
 module.exports = {
     getRandomQuestion,
+    getRandomQuestionWithoutCodeExamples,
     getQuestionsFromAI,
     generateQuestions
 }

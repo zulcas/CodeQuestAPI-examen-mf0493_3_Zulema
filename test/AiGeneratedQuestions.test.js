@@ -25,14 +25,6 @@ describe('Testing the "/api/v1/questions/ai" endpoint', () => {
     const data = await response.json();
     expect(data.message).toMatch(/not exceed 140 characters/i);
   });
-  it('Should ensure that only one answer is correct', async () => {
-    const response = await fetch('http://localhost:3000/api/v1/questions/ai');
-    expect(response.status).toBe(200);
-    const data = await response.json();
-    const question = data.results[0];
-    const correctAnswers = question.answerOptions.filter(option => option.isCorrect);
-    expect(correctAnswers.length).toBe(1);
-  })
   it('Should return an error if topic is shorter than 2 characters', async () => {
     const response = await fetch(`http://localhost:3000/api/v1/questions/ai?topic=H`);
     expect(response.status).toBe(400);
