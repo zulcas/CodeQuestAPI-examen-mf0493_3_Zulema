@@ -29,6 +29,17 @@ const getQuestionsFromAI = async (topic) => {
     }
 }
 
+const insertQuestion = async (q) => {
+    // q -> question to be introduced
+    try {
+        await Questions.create(q)
+    }
+    catch {
+        throw new Error('We could not create the question.');
+    }
+};
+
+
 // Function to generate a specified number of questions based on a given topic
 const generateQuestions = async (topic, amount) => {
     // Validate the topic length to ensure it meets the requirements
@@ -84,5 +95,6 @@ module.exports = {
     getRandomQuestion,
     getRandomQuestionWithoutCodeExamples,
     getQuestionsFromAI,
-    generateQuestions
+    generateQuestions,
+    insertQuestion
 }
