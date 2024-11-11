@@ -38,7 +38,7 @@ const newQuestionForm = (req, res) => {
 const createNewQuestion = async(req, res) => {
 	try {
 		//If validation of checkbox is passed
-		console.log("esto es la validacion", questionService.validateCheckboxNewQuestion(req.body))
+		console.log("esto es la validacion:", questionService.validateCheckboxNewQuestion(req.body))
 		if(questionService.validateCheckboxNewQuestion(req.body)){
 			await questionService.insertQuestion(req.body);
 			console.log(req.body);

@@ -38,10 +38,10 @@ const insertQuestion = async (q) => {
 }; 
 
 const validateCheckboxNewQuestion = (obj) =>{
-	//Function receives information from req.body and validate checkbox status 
+	//Function receives information from req.body and validates checkbox status 
 	//1) Validate exists at least one correct answer
 	const hasCorrectAnswer = Object.values(obj).some(element => {
-		//If some checkbox (boolean data) is true we validate correctly the answer
+		//If any checkbox (boolean data) is "true" we validate the answer as correct
 		return (element == "true" && element)	
 	});
 	console.log(hasCorrectAnswer)
