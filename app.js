@@ -1,7 +1,8 @@
 const express = require("express");
 const { connectDB } = require("./config/db");
 const dotenv = require("dotenv");
-const indexRouter = require("./routes/index");
+const indexRouter = require("./routes/index.routes");
+const apiRouter = require("./routes/api.routes");
 const { getRandomQuestion, getRandomQuestionWithoutCodeExamples } = require('./services/question.services');
 const { shuffleArray } = require('./config/utils')
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.use("/", indexRouter);
+app.use("/api", apiRouter);
 app.use(express.static('public'));
 
 app.get('/daily-question', async (req, res) => {
