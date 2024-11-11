@@ -1,10 +1,10 @@
 const express = require("express");
-const { connectDB } = require("./config/db");
+const { connectDB } = require("./utils/db");
 const dotenv = require("dotenv");
 const indexRouter = require("./routes/index.routes");
 const apiRouter = require("./routes/api.routes");
 const { getRandomQuestion, getRandomQuestionWithoutCodeExamples } = require('./services/question.services');
-const { shuffleArray } = require('./config/utils')
+const { shuffleArray } = require('./utils/utils')
 
 dotenv.config();
 

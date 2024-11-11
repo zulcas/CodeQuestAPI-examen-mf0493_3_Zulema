@@ -1,4 +1,4 @@
-const { connectDB, disconnectDB }  = require("../config/db");
+const { connectDB, disconnectDB }  = require("../utils/db");
 const { getRandomQuestion } = require("../services/question.services");
 const dotenv = require("dotenv");
 dotenv.config();
