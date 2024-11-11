@@ -18,8 +18,6 @@ const insertQuestion = async (q) => {
 	}
 };
 
-
-
 module.exports = {
 	getRandomQuestion,
 	insertQuestion,
