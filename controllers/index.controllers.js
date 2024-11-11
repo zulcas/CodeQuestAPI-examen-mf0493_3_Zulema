@@ -1,5 +1,8 @@
+const xlsx = require("xlsx");
+const fs = require("fs");
+const path = require("path");
+const { getRandomQuestion, insertQuestion } = require('../services/question.services');
 
-const questionService = require('../services/question.services');
 const validateCheckboxNewQuestion = (obj) => {
 	//Function receives information from req.body and validate checkbox status 
 	//1) Validate exists at least one correct answer
@@ -10,35 +13,104 @@ const validateCheckboxNewQuestion = (obj) => {
 	console.log(hasCorrectAnswer)
 	return hasCorrectAnswer;
 }
-const getRandomQuestions = async (req, res) => {
-	try {
+const getFormTemplate = async (req, res) => {
+	res.render("template-form", {});
+};
 
-		const randomQuestion = await questionService.getRandomQuestion();
+const getTemplateQuestions = async (req, res) => {
+	const { numberQuestions } = req.query;
+
+	const templateType = req.query.templateType;
+
+	let row = templateType == "excel" ? 9 : 3;
+	console.log("🚀 ~ getTemplateQuestions ~ row:", row);
+
+	//lee el template
+	const originalFilePath =
+		templateType == "excel"
+			? "./resources/kahoot-template.xlsx"
+			: "./resources/blooket-template.xlsx";
+	const workbook = xlsx.readFile(originalFilePath);
+
+	// creamos el nuevo documento
+
+	const worksheet = workbook.Sheets["Sheet1"];
+	const newWorkbook = xlsx.utils.book_new();
+
+	// Agregar la copia de la hoja al nuevo archivo
+	xlsx.utils.book_append_sheet(newWorkbook, worksheet, "Sheet1");
+
+	const randomQuestions = await getRandomQuestion(Number(numberQuestions));
+	console.log("🚀 ~ getTemplateQuestions ~ randomQuestions:", randomQuestions.length)
 
 
-		/* 	const totalQuestions = await Questions.countDocuments();
-			if (totalQuestions === 0) {
-				return res.status(404).json({
-					message: "Question not found",
-					results: []
-				})
-			} */
+	for (let i = 0; i < randomQuestions.length; i++) {
 
+		const randomQuestion = randomQuestions[i];
 
-		res.status(200).json({
-			message: "Random question delivered successfully",
-			results: randomQuestion
-		});
+		const correctIndex = randomQuestion.answerOptions.findIndex(
+			(option) => option.isCorrect
+		);
+		const correctAnswerNumber = correctIndex + 1;
 
-	} catch (error) {
-		res.status(500).json({
-			message: "Error fetching random question",
+		newWorkbook.Sheets["Sheet1"][`B${row}`] = {
+			v: randomQuestion.question,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`C${row}`] = {
+			v: randomQuestion.answerOptions[0].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`D${row}`] = {
+			v: randomQuestion.answerOptions[1].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`E${row}`] = {
+			v: randomQuestion.answerOptions[2].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`F${row}`] = {
+			v: randomQuestion.answerOptions[3].answer,
+			t: "s",
+		};
+		newWorkbook.Sheets["Sheet1"][`G${row}`] = { v: 30, t: "n" };
+		newWorkbook.Sheets["Sheet1"][`H${row}`] = {
+			v: correctAnswerNumber,
+			t: "s",
+		};
 
-
-		})
+		row += 1;
 	}
 
-}
+	const newFilePath =
+		templateType == "excel"
+			? "./resources/temporary_excel.xlsx"
+			: "./resources/temporary_csv.csv";
+			
+	if (templateType == "excel") {
+		xlsx.writeFile(newWorkbook, newFilePath);
+
+		console.log(`Archivo xlsx guardado correctamente en ${newFilePath}`);
+	} else {
+		xlsx.writeFile(newWorkbook, newFilePath, { bookType: "csv" });
+
+		console.log(`Archivo CSV guardado correctamente en ${newFilePath}`);
+	}
+
+	const nameFile =
+		templateType == "excel"
+			? `${numberQuestions}_questions_for_kahoot.xlsx`
+			: `${numberQuestions}_questions_for_blooket.csv`;
+
+	res.download(newFilePath, nameFile, (err) => {
+		if (err) {
+			console.error("Error al enviar el archivo:", err);
+			res.status(500).send("Error al descargar el archivo");
+		} else {
+			fs.unlinkSync(newFilePath);
+		}
+	});
+};
 
 const newQuestionForm = (req, res) => {
 	let message = '';
@@ -73,7 +145,7 @@ const createNewQuestion = async (req, res) => {
 				status: "pending"
 			}
 
-			await questionService.insertQuestion(newQuestion);
+			await insertQuestion(newQuestion);
 			console.log(newQuestion);
 			let message = 'Thank you for submitting a new question. Our team will revise it and, if correct, include it in our database.';
 			res.status(201).render('new-question.ejs', { message });
@@ -97,12 +169,9 @@ const createNewQuestion = async (req, res) => {
 };
 
 module.exports = {
-	getRandomQuestions,
 	newQuestionForm,
-	createNewQuestion
+	createNewQuestion,
+	getTemplateQuestions,
+	getFormTemplate
 };
-/* app.get('/api/v1/question/random', async (req, res) => {
 
-
-
-}) */
