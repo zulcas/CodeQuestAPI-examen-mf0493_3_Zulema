@@ -54,35 +54,32 @@ const generateQuestions = async (topic, amount) => {
 };
 
 
-const getRandomQuestion = async (amount) => {
-    console.log("🚀 ~ getRandomQuestion ~ amount:", amount)
+const getRandomQuestionsDB = async (amount, includeCodeExamples = true) => {
+    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "includeCodeExamples:", includeCodeExamples);
 
-    if (typeof amount !== "number" || isNaN(amount) || amount <= 0) {
+    if (typeof amount !== "number" || isNaN(amount) || amount < 0) {
         throw new Error("Amount must be a positive number.");
     }
-
+   
     try {
+        let matchCondition = {}
+        if (!includeCodeExamples){
+            matchCondition = { codeExamples: { $size: 0 } };
+        }
         const questions = await Questions.aggregate([
+            { $match: matchCondition },
             { $sample: { size: amount } },
         ]);
         return questions;
     } catch (error) {
         throw new Error("Error fetching random questions from the database.");
     }
+   
 };
 
-const getRandomQuestionWithoutCodeExamples = async () => {
-    const questions = await Questions.aggregate([
-        { $match: { codeExamples: [] } },
-        { $sample: { size: 1 } }
-    ]);
-
-    return questions;
-};
 
 module.exports = {
-    getRandomQuestion,
-    getRandomQuestionWithoutCodeExamples,
+    getRandomQuestionsDB,
     getQuestionsFromAI,
     generateQuestions
 }

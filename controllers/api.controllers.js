@@ -1,7 +1,7 @@
 const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
-const { generateQuestions, getRandomQuestion } = require('../services/question.services');
+const { generateQuestions, getRandomQuestionsDB } = require('../services/question.services');
 
 /**
  * Get random questions from the service.
@@ -23,7 +23,7 @@ const { generateQuestions, getRandomQuestion } = require('../services/question.s
  */
 const getRandomQuestions = async (req, res) => {
 	try {
-		let { amount } = req.query;
+		let { amount, includeCodeExamples } = req.query;
 		amount = parseInt(amount, 10);
 
 		//validation of amount
@@ -33,7 +33,9 @@ const getRandomQuestions = async (req, res) => {
 			amount = 30;
 		}
 
-		const randomQuestion = await getRandomQuestion(amount);
+		includeCodeExamples = includeCodeExamples === 'false' ? false : true
+		const randomQuestion = await getRandomQuestionsDB(amount, includeCodeExamples);
+		
 
 		res.status(200).json({
 			message: "Random questions delivered successfully",

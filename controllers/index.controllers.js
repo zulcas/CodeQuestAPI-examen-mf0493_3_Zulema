@@ -1,7 +1,9 @@
 const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
-const { getRandomQuestion } = require('../services/question.services');
+const { getRandomQuestionsDB } = require('../services/question.services');
+const { shuffleArray } = require('../utils/utils')
+
 
 const getFormTemplate = async (req, res) => {
 	res.render("template-form", {});
@@ -30,7 +32,7 @@ const getTemplateQuestions = async (req, res) => {
 	// Agregar la copia de la hoja al nuevo archivo
 	xlsx.utils.book_append_sheet(newWorkbook, worksheet, "Sheet1");
 
-	const randomQuestions = await getRandomQuestion(Number(numberQuestions));
+	const randomQuestions = await getRandomQuestionsDB(Number(numberQuestions));
 	console.log("🚀 ~ getTemplateQuestions ~ randomQuestions:", randomQuestions.length)
 
 
@@ -102,8 +104,22 @@ const getTemplateQuestions = async (req, res) => {
 	});
 };
 
+const getDailyQuestion = async (req, res) => {
+  // Obtener la pregunta correspondiente al día
+  const questions = await getRandomQuestionsDB(1, false);
+  const questionsWithShuffledAnswers = questions.map(question => {
+    return {
+        ...question,
+        answerOptions: shuffleArray(question.answerOptions)
+    };
+	});
+  // Renderizar la página con la pregunta y las opciones
+  res.render('home',  {questionsWithShuffledAnswers} );
+};
+
 
 module.exports = {
 	getTemplateQuestions,
-	getFormTemplate
+	getFormTemplate,
+	getDailyQuestion
 };
