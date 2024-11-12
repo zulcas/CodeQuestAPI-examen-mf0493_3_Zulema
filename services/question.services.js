@@ -54,21 +54,16 @@ const generateQuestions = async (topic, amount) => {
 };
 
 
-const getRandomQuestionsDB = async (amount, includeCodeExamples = true) => {
-    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "includeCodeExamples:", includeCodeExamples);
+const getRandomQuestionsDB = async (amount, filter = {}) => {
+    console.log("🚀 ~ getRandomQuestionsDB ~ amount:", amount, "filter:", filter);
 
     if (typeof amount !== "number" || isNaN(amount) || amount < 0) {
         throw new Error("Amount must be a positive number.");
     }
    
     try {
-        let matchCondition = { status: { $ne: 'pending' } }
-        if (!includeCodeExamples){
-            matchCondition = { 
-                ...matchCondition,
-                codeExamples: { $size: 0 }  
-            };
-        }
+        // Inicia con la condición de status y agrega cualquier otro filtro pasado como parámetro
+        let matchCondition = { status: { $ne: 'pending' }, ...filter };
         const questions = await Questions.aggregate([
             { $match: matchCondition },
             { $sample: { size: amount } },
@@ -78,8 +73,8 @@ const getRandomQuestionsDB = async (amount, includeCodeExamples = true) => {
     } catch (error) {
         throw new Error("Error fetching random questions from the database.");
     }
-   
 };
+
 
 
 module.exports = {

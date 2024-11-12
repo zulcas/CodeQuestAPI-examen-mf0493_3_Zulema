@@ -106,7 +106,7 @@ const getTemplateQuestions = async (req, res) => {
 
 const getDailyQuestion = async (req, res) => {
   // Obtener la pregunta correspondiente al día
-  const questions = await getRandomQuestionsDB(1, false);
+  const questions = await getRandomQuestionsDB(1, {codeExamples:[]});
   const questionsWithShuffledAnswers = questions.map(question => {
     return {
         ...question,

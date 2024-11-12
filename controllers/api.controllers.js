@@ -33,7 +33,7 @@ const getRandomQuestions = async (req, res) => {
 			amount = 30;
 		}
 
-		const randomQuestion = await getRandomQuestionsDB(amount, true);
+		const randomQuestion = await getRandomQuestionsDB(amount);
 		
 
 		res.status(200).json({
