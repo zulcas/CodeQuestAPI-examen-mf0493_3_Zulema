@@ -23,7 +23,7 @@ const { generateQuestions, getRandomQuestionsDB } = require('../services/questio
  */
 const getRandomQuestions = async (req, res) => {
 	try {
-		let { amount, includeCodeExamples } = req.query;
+		let { amount } = req.query;
 		amount = parseInt(amount, 10);
 
 		//validation of amount
@@ -33,8 +33,7 @@ const getRandomQuestions = async (req, res) => {
 			amount = 30;
 		}
 
-		includeCodeExamples = includeCodeExamples === 'false' ? false : true
-		const randomQuestion = await getRandomQuestionsDB(amount, includeCodeExamples);
+		const randomQuestion = await getRandomQuestionsDB(amount, true);
 		
 
 		res.status(200).json({

@@ -62,14 +62,18 @@ const getRandomQuestionsDB = async (amount, includeCodeExamples = true) => {
     }
    
     try {
-        let matchCondition = {}
+        let matchCondition = { status: { $ne: 'pending' } }
         if (!includeCodeExamples){
-            matchCondition = { codeExamples: { $size: 0 } };
+            matchCondition = { 
+                ...matchCondition,
+                codeExamples: { $size: 0 }  
+            };
         }
         const questions = await Questions.aggregate([
             { $match: matchCondition },
             { $sample: { size: amount } },
         ]);
+        
         return questions;
     } catch (error) {
         throw new Error("Error fetching random questions from the database.");
