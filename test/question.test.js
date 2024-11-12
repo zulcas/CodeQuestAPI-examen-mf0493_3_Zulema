@@ -1,5 +1,5 @@
 const { connectDB, disconnectDB }  = require("../utils/db");
-const { getRandomQuestion } = require("../services/question.services");
+const { getRandomQuestionsDB } = require("../services/question.services");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -51,7 +51,7 @@ describe('Testing about "/api/v1/questions/random" endpoint', () => {
 	})
 })
 
-describe('Testing getRandomQuestion service', () => {
+describe('Testing getRandomQuestionsDB service', () => {
 	beforeAll(async () => {
 		await connectDB(); // Conecta a la base de datos antes de todos los tests
 	});
@@ -61,17 +61,24 @@ describe('Testing getRandomQuestion service', () => {
 	});
 
 	it('Should return 1 when the parameter is 1', async () => {
-		const result = await getRandomQuestion(1);
+		const result = await getRandomQuestionsDB(1);
 		expect(result).toHaveLength(1);
 	});
 
-	it('Should return 1 when the parameter is 20', async () => {
-		const result = await getRandomQuestion(20);
+	it('Should return 20 when the parameter is 20, and codeExamples should be defined in each question from DB', async () => {
+		const result = await getRandomQuestionsDB(20);
 		expect(result).toHaveLength(20);
+		expect(result[0].codeExamples).toBeDefined();
 	});
 
 	it('Should return an exception when the parameter is "patata"', async () => {
-		await expect(getRandomQuestion("patata")).rejects.toThrow("Amount must be a positive number.");
-	  });
+		await expect(getRandomQuestionsDB("patata")).rejects.toThrow("Amount must be a positive number.");
+	});
+
+	it('Should return a question that does not include codeExamples when fetching from "daily-question" endpoint"', async () => {
+		const result = await getRandomQuestionsDB(1, {codeExamples:[]})
+		expect(result[0].codeExamples).toHaveLength(0)
+	});
+
 })
 
