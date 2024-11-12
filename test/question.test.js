@@ -65,13 +65,20 @@ describe('Testing getRandomQuestionsDB service', () => {
 		expect(result).toHaveLength(1);
 	});
 
-	it('Should return 1 when the parameter is 20', async () => {
+	it('Should return 20 when the parameter is 20, and codeExamples should be defined in each question from DB', async () => {
 		const result = await getRandomQuestionsDB(20);
 		expect(result).toHaveLength(20);
+		expect(result[0].codeExamples).toBeDefined();
 	});
 
 	it('Should return an exception when the parameter is "patata"', async () => {
 		await expect(getRandomQuestionsDB("patata")).rejects.toThrow("Amount must be a positive number.");
-	  });
+	});
+
+	it('Should return a question that does not include codeExamples when fetching from "daily-question" endpoint"', async () => {
+		const result = await getRandomQuestionsDB(1, {codeExamples:[]})
+		expect(result[0].codeExamples).toHaveLength(0)
+	});
+
 })
 
