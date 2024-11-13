@@ -33,11 +33,12 @@ const questionSchema = new Schema({
 		type: String
 
 	},
-	status: {
+	difficulty: {
 		type: String,
-		enum: ["approved", "pending"],
-		default: "approved"
+		enum: ["easy", "medium", "hard"],
+		default: "medium"
 	}
+
 });
 
 const Questions = model('question', questionSchema);
